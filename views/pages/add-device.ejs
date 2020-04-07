@@ -1,0 +1,51 @@
+<%- include ('../partials/header')%>
+<%- include ('../partials/nav')%>
+<div class="row">
+    <div class="col m3">
+        <%- include ('../partials/sideNav')%>
+    </div>
+        <div class="col m9">
+         <div class="container center-align">
+            <div class="row">
+            <div class="col s12">
+            <h3>New Device</h>
+            <div class="row">
+             <form class="col s12 center-align" method="post" action="/admin/add-device">
+               <div class="row">
+                 <div class="input-field col s6">
+                   <input  id="S/N" name="SN" type="text" class="validate">
+                   <label for="S/N">S/N</label>
+                 </div>
+                 <div class="input-field col s6">
+                   <input id="phone" name="phone" type="text" class="validate">
+                   <label for="phone">Phone Number</label>
+                 </div>
+               </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="location" name="location" type="text" class="validate">
+                  <label for="location">Location</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input  id="road" name="road" type="text" class="validate">
+                  <label for="road">Road</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="lamp_number" name="lamp_number" type="text" class="validate">
+                  <label for="lamp_number">Lamp Number</label>
+                </div>
+              </div>
+               <div class="row right-align">
+                <button type="submit" class="btn waves-effect waves-light teal">Create</button>
+               </div>
+             </form>
+           </div>
+        </div>
+         </div>
+        </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>
