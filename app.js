@@ -4,6 +4,11 @@ const express=require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const store = new MongoDBStore({
+  uri: 'mongodb+srv://stls:stls@cluster0-tkfjg.mongodb.net/slms?retryWrites=true&w=majority',
+  collection: 'sessions'
+});
 
 const app=express();
 
@@ -18,6 +23,7 @@ app.use(session({
     secret: 'jhfjsahjfhsjdhfjsdhfjhdsjkhkjfhdskjhfkjdhsfkjdhskfjhdjskfhdksjfhiuirwuqor',
     resave: false,
     saveUninitialized: false,
+    store:store
   }))
 
 app.use(cors());
