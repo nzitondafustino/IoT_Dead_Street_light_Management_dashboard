@@ -9,7 +9,7 @@ function update(event){
         $('#roadu').val(lamp[0].road);
         $('#lamp_numberu').val(lamp[0].lampNumber);
         var updateForm = document.getElementById('updateForm');
-        updateForm.setAttribute('action','/admin/update-device/' + serialNumber);
+        updateForm.setAttribute('action','/admin/update-device/' + lamp[0]._id);
   }
 
 function view(event){
@@ -28,8 +28,11 @@ function view(event){
 }
 function deleteDevice(event){
     var serialNumber = event.target.parentNode.parentNode.textContent.trim().split(' ')[0];
+    var lamp = devices.filter((device)=>{
+        return device.SN.trim() == serialNumber.trim();
+    })
     var deleteForm = document.getElementById('deleteForm');
-    deleteForm.setAttribute('action','/admin/delete-device/' + serialNumber);
+    deleteForm.setAttribute('action','/admin/delete-device/' + lamp[0]._id);
 }
 function viewUser(event){
     var email =  event.target.parentNode.parentNode.childNodes[5].innerHTML;

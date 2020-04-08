@@ -3,6 +3,7 @@ const express=require('express');
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const session = require('express-session');
 
 const app=express();
 
@@ -12,6 +13,12 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
+
+app.use(session({
+    secret: 'jhfjsahjfhsjdhfjsdhfjhdsjkhkjfhdskjhfkjdhsfkjdhskfjhdjskfhdksjfhiuirwuqor',
+    resave: false,
+    saveUninitialized: false,
+  }))
 
 app.use(cors());
 //importing mongoose

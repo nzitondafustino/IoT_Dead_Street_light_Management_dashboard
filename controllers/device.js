@@ -35,8 +35,27 @@ exports.postAddDevice = async function(req,res,next){
      res.redirect('/admin/dashboard');
 }
 exports.updateDevice = async function(req,res,next){
-    var serialNumber = req.params.SN;
-    const device = await Device.findOne({SN:serialNumber});
+    const errors = validationResult(req);
+    console.log(req.body);
+    if (!errors.isEmpty()) {
+        console.log(errors);
+        const devices = await Device.find({activated:true});
+       return res.render('pages/dashboard',{title:"Dashboard",devices:devices,errors:errors});
+      }
+    var id = req.params.id;
+    const device = await Device.findById(id);
+    if(device.SN !== req.body.SN){
+       const usedDevice = await Device.findOne({SN:req.body.SN})
+       if(usedDevice){
+        errors.errors.push({
+            value:req.body.SN,
+            msg:"Device already exit"
+        })
+        console.log(errors);
+        const devices = await Device.find({activated:true});
+        return res.render('pages/dashboard',{title:"Dashboard",devices:devices,errors:errors});
+       }
+    }
     device.SN = req.body.SN;
     device.phone = req.body.phone;
     device.location = req.body.location;

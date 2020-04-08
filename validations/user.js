@@ -1,20 +1,20 @@
 //importing express validator
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
 exports.addUser=[
-    check('first_name')
+    body('first_name')
     .isAlpha()
     .withMessage("Must be alphabet")
     .isLength({min:3})
     .withMessage("Must have minimum 3 characters"),
-    check('last_name')
+    body('last_name')
     .isAlpha()
     .withMessage("Must be alphabet")
     .isLength({min:3})
     .withMessage("Must have minimum 3 characters"),
-    check('email').isEmail().withMessage("Must be Real email")
+    body('email').normalizeEmail().isEmail().withMessage("Must be Real email")
     .custom(email=>{
         return User.findOne({email:email})
         .then((user)=>{
@@ -23,39 +23,37 @@ exports.addUser=[
             }
         })
     }),
-    check('password').isLength({min:4})
-    .custom((password,{req})=>{
-        if(password !== req.body.confirm_password)
+    body('password')
+    .trim()
+    .isLength({min:4})
+    .withMessage("Password must be at least 4 characters"),
+    body('confirmPassword')
+    .trim()
+    .custom((confirmPassword,{req})=>{
+        if(confirmPassword !== req.body.password)
         {
-            return Promise.reject("Password does not match");
+            throw new Error("Password does not match")
         }
+        return true;
     })
-    .withMessage("Password must be at least 4 characters")
 ]
 exports.updateUser=[
-    check('first_name')
+    body('first_name')
     .isAlpha()
     .withMessage("Must be alphabet")
     .isLength({min:3})
     .withMessage("Must have minimum 3 characters"),
-    check('last_name')
+    body('last_name')
     .isAlpha()
     .withMessage("Must be alphabet")
     .isLength({min:3})
     .withMessage("Must have minimum 3 characters"),
-    check('email').isEmail().withMessage("Must be Real email")
-    .custom(email=>{
-        return User.find({email:email})
-        .then((users)=>{
-            if(users.length > 1){
-                return Promise.reject("E-mail already in use")
-            }
-        })
-    }),
-    check('password').optional({checkFalsy:true}).isLength({min:4})
+    body('email').normalizeEmail().isEmail().withMessage("Must be Real email"),
+    body('password').optional({checkFalsy:true}).isLength({min:4})
     .custom((password,{req})=>{
         if(password != req.body.confirm_password){
-            return Promise.reject("Password does not match");
+            throw new Error("Password does not match")
         }
+        return true;
     })
 ]

@@ -3,11 +3,13 @@
     <li><a href="/admin/add-device">
       <i class="material-icons">add</i>Add new Device</a>
     </li>
+    <%  if(user) { if(user.role == 1) { %>
     <li><a href="/admin/add-user">
       <i class="material-icons">person</i> Add User</a>
     </li>
     <li><a href="/admin/all-users">
       <i class="material-icons">group</i> All Users</a>
     </li>
+    <% } } %>
     <li><a href="/"><i class="material-icons">logout</i>Logout</a></li>
   </ul>
