@@ -1,21 +1,22 @@
 <%- include ('../partials/header')%>
 <%- include ('../partials/nav')%>
+<div class="container">
 <div class="row">
     <div class="col m3">
         <%- include ('../partials/sideNav')%>
     </div>
-    <div class="col m9">
+    <div class="col m12">
         <table>
             <thead>
               <tr>
-                  <th>S/N</th>
-                  <th>Voltage(V)</th>
-                  <th>Current(I)</th>
+                  <th class="hide-on-med-and-down">S/N</th>
+                  <th class="hide-on-med-and-down">Voltage(V)</th>
+                  <th class="hide-on-med-and-down">Current(I)</th>
                   <th>Brightness(%)</th>
-                  <th>Location</th>
-                  <th>Last Updates</th>
-                  <th>Status</th>
-                  <th>light</th>
+                  <th class="hide-on-med-and-down">Location</th>
+                  <th class="hide-on-med-and-down">Last Updates</th>
+                  <th >Status</th>
+                  <th >Condition</th>
                   <th>#</th>
               </tr>
             </thead>
@@ -23,16 +24,17 @@
             <tbody>
               <% devices.forEach(function(device){ %>
                 <tr>
-                  <td><%= device.SN %></td>
-                  <td><%= device.voltage %></td>
-                  <td><%= device.current %></td>
-                  <td><%= device.location %></td>
-                  <td>20 minutes</td>
+                  <td class="hide-on-med-and-down"><%= device.SN %></td>
+                  <td class="hide-on-med-and-down"><%= device.voltage %></td>
+                  <td class="hide-on-med-and-down"><%= device.current %></td>
+                  <td><%= device.brightness %></td>
+                  <td class="hide-on-med-and-down"><%= device.location %></td>
+                  <td class="hide-on-med-and-down">20 minutes</td>
                   <td>online</td>
                   <td>Normal</td>
-                  <td><a class="btn waves-effect waves-light teal view modal-trigger" data-target="modal1" onclick="view(event)">View</a>
-                      <a class="btn waves-effect waves-light blue update modal-trigger" data-target="modal2" onclick="update(event)">update</a>
-                     <a class="btn waves-effect waves-light red delete modal-trigger" data-target="modal3" onclick="deleteDevice(event)">Delete</a></td>
+                  <td><a class="btn-floating btn waves-effect waves-light teal view modal-trigger btn-small" data-target="modal1" onclick="view(event)"><i class="material-icons">visibility</i></a>
+                      <a class="btn-floating btn waves-effect waves-light blue update modal-trigger btn-small" data-target="modal2" onclick="update(event)"><i class="material-icons">edit</i></a>
+                     <a class="btn-floating btn waves-effect waves-light red delete modal-trigger btn-small" data-target="modal3" onclick="deleteDevice(event)"><i class="material-icons">delete</i></a></td>
                 </tr>
               <% }) %>
             </tbody>
@@ -99,7 +101,7 @@
                       <div class="modal-footer">
                         <form action="/admin/delete-device" method="post" id="deleteForm">
                           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                          <button type="button" class="modal-close waves-effect teal waves-green btn-flat">Cancel</button>
+                          <button type="button" class="modal-close waves-effect teal waves-green btn-flat ">Cancel</button>
                           <button type="submit" class="modal-close waves-effect red waves-green btn-flat">Yes</button>
                         </form>
                       </div>
@@ -109,7 +111,7 @@
     </div>
 </div>
 
-
+</div>
 <script>
   var devices = <%- JSON.stringify(devices) %>;
 </script>

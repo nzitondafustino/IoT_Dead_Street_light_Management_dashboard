@@ -1,5 +1,5 @@
 function update(event){
-    var serialNumber = event.target.parentNode.parentNode.textContent.trim().split(' ')[0];
+    var serialNumber = event.target.parentNode.parentNode.parentNode.textContent.trim().split(' ')[0];
     var lamp = devices.filter((device)=>{
         return device.SN.trim() == serialNumber.trim();
     })
@@ -13,7 +13,7 @@ function update(event){
   }
 
 function view(event){
- var serialNumber = event.target.parentNode.parentNode.textContent.trim().split(' ')[0];
+ var serialNumber = event.target.parentNode.parentNode.parentNode.textContent.trim().split(' ')[0];
  var lamp = devices.filter((device)=>{
      return device.SN.trim() == serialNumber.trim();
  })
@@ -27,7 +27,7 @@ function view(event){
         $('#lamp').html('Lamp Number: ' + lamp[0].lampNumber);
 }
 function deleteDevice(event){
-    var serialNumber = event.target.parentNode.parentNode.textContent.trim().split(' ')[0];
+    var serialNumber = event.target.parentNode.parentNode.parentNode.textContent.trim().split(' ')[0];
     var lamp = devices.filter((device)=>{
         return device.SN.trim() == serialNumber.trim();
     })
@@ -35,7 +35,7 @@ function deleteDevice(event){
     deleteForm.setAttribute('action','/admin/delete-device/' + lamp[0]._id);
 }
 function viewUser(event){
-    var email =  event.target.parentNode.parentNode.childNodes[5].innerHTML;
+    var email =  event.target.parentNode.parentNode.parentNode.childNodes[5].innerHTML;
     var user = users.filter(user=>{
        return user.email.trim() == email.trim();
     })
@@ -45,7 +45,7 @@ function viewUser(event){
     $('#role').html((user[0].role==1)?"Role: Admin":"Role: Normal");
 }
 function updateUser(event){
-    var email =  event.target.parentNode.parentNode.childNodes[5].innerHTML;
+    var email =  event.target.parentNode.parentNode.parentNode.childNodes[5].innerHTML;
     var user = users.filter(user=>{
        return user.email.trim() == email.trim();
     });
@@ -56,7 +56,7 @@ function updateUser(event){
     $('#emailu').val(user[0].email);
 }
 function deleteUser(){
-    var email =  event.target.parentNode.parentNode.childNodes[5].innerHTML;
+    var email =  event.target.parentNode.parentNode.parentNode.childNodes[5].innerHTML;
     var user = users.filter(user=>{
         return user.email.trim() == email.trim();
      });
@@ -64,6 +64,6 @@ function deleteUser(){
     deleteForm.setAttribute('action','/admin/delete-user/' + user[0]._id);
 
 }
-function logout(event){
-console.log("here we are")
-}
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
+    });
