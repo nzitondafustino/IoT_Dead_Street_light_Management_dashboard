@@ -37,12 +37,6 @@ exports.postAddUser = async function(req,res,next){
         })
         //saving user int a database
         await user.save();
-        req.session.user = {
-            first_name : req.body.first_name,
-            last_name : req.body.last_name,
-            email :req.body.email,
-            role:req.body.role
-        }
     } catch(e){
         console.log(e.message);
     }
