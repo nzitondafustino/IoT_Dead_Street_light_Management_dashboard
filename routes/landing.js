@@ -1,10 +1,12 @@
 const express=require('express');
 const router = express.Router();
 
-router.get('/',function(req,res,next){
+//import middleware
+
+const auth = require('../middlewares/isAuth');
+
+router.get('/',auth.isNotAuth,function(req,res,next){
+    console.log(req.csrfToken() )
 res.render('pages/landing',{title:"Login"});
 })
-router.post('/login',function(req,res,next){
-    res.redirect('admin/dashboard');
-    })
 module.exports = router;

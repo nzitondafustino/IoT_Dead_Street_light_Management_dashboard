@@ -62,6 +62,7 @@
                       <div class="modal-content">
                         <h4>Update Details</h4>
                         <form class="col s12 center-align" method="post" id="updateForm" action="/admin/update-device">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                           <div class="row">
                             <div class="input-field col s6">
                               <input  id="SNu" placeholder="S/N" name="SN" type="text" class="validate">
@@ -97,6 +98,7 @@
                       </div>
                       <div class="modal-footer">
                         <form action="/admin/delete-device" method="post" id="deleteForm">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                           <button type="button" class="modal-close waves-effect teal waves-green btn-flat">Cancel</button>
                           <button type="submit" class="modal-close waves-effect red waves-green btn-flat">Yes</button>
                         </form>

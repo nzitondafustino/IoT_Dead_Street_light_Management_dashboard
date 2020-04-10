@@ -100,6 +100,7 @@ exports.userLogin = async function(req,res,next){
     res.redirect('/admin/dashboard');
 }
 exports.userLogout = (req,res,next)=>{
-    req.session.user = null;
-    res.redirect('/')
+    req.session.destroy((error)=>{
+        res.redirect('/');
+    })
 }

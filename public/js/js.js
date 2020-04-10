@@ -64,3 +64,6 @@ function deleteUser(){
     deleteForm.setAttribute('action','/admin/delete-user/' + user[0]._id);
 
 }
+function logout(event){
+console.log("here we are")
+}

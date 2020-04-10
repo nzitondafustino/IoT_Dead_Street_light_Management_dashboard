@@ -4,6 +4,7 @@
         <li>
             <li>
               <form action="/admin/logout" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit" class="waves-effect waves-teal btn-flat white-text">Logout</button>
               </form>
             </li>
