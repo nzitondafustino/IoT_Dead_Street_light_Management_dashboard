@@ -66,4 +66,5 @@ function deleteUser(){
 }
     $(document).ready(function(){
         $('.sidenav').sidenav();
-    });
+      });
+           
