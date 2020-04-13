@@ -3,8 +3,8 @@ const router = express.Router();
 
 //importing mcuco controller
 
-const mcuController = require('../controllers/mc')
+const mcuController = require('../controllers/data')
 
-router.post('/mcu-data',mcuController.updateMcData);
+router.get('/data',mcuController.updateMcData);
 
 module.exports = router;

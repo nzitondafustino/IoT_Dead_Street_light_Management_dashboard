@@ -46,7 +46,7 @@ app.use((req,res,next)=>{
    next();
 })
 //importing MCU route
-const mcuRoutes = require('./routes/mc');
+const mcuRoutes = require('./routes/data');
 
 const landingRouter=require('./routes/landing');
 //dashboard
@@ -59,6 +59,6 @@ app.use('/',landingRouter);
 
 app.use('/admin',dashBoardRouter);
 
-app.use('/lamp',mcuRoutes);
+app.use('/add',mcuRoutes);
 
 module.exports=app;
