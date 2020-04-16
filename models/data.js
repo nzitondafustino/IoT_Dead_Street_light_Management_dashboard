@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const dataSchema = new schema({
-    data:String,
+    voltage:String,
+    current:String,
+    brightness:String,
+    condition:Boolean
 });
 
 const Data = mongoose.model('Data',dataSchema);

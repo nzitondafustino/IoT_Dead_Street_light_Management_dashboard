@@ -2,8 +2,18 @@
 const Data = require('../models/data')
 
 exports.updateMcData = async function(req,res,next){
-  const data = new Data(req.body);
-  await data.save();
-  console.log("done");
-  return res.status(200).json(data);
+  const data = req.query.data.split('*')
+  const serialNumber = data[0]
+  const voltage = data[1];
+  const current = data[2];
+  const brightness = data[3];
+  const condition =data[4];
+  const values = new Data({
+    voltage:voltage,
+    current:current,
+    brightness:brightness,
+    condition:condition
+  });
+  await values.save();
+  return res.status(200).json(values);
 }
