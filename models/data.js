@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const dataSchema = new schema({
+    serialNumber:String,
     voltage:String,
     current:String,
     brightness:String,

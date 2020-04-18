@@ -1,4 +1,6 @@
 const express=require('express');
+
+const http=require('http');
 //importing body parser
 
 const bodyParser = require('body-parser');
@@ -13,7 +15,8 @@ const store = new MongoDBStore({
 });
 
 const app=express();
-
+const server=http.createServer(app);
+const io = require('socket.io')(server);
 //setting app to use static file
 app.use(express.static('public'));
 // parse application/x-www-form-urlencoded
@@ -45,6 +48,12 @@ app.use((req,res,next)=>{
    res.locals.csrfToken = req.csrfToken();
    next();
 })
+
+app.use((req,res,next)=>{
+  res.io = io;
+  next()
+})
+
 //importing MCU route
 const mcuRoutes = require('./routes/data');
 
@@ -60,5 +69,5 @@ app.use('/',landingRouter);
 app.use('/admin',dashBoardRouter);
 
 app.use('/add',mcuRoutes);
-
-module.exports=app;
+const port = process.env.PORT || 80;
+server.listen(port);

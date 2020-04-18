@@ -9,11 +9,13 @@ exports.updateMcData = async function(req,res,next){
   const brightness = data[3];
   const condition =data[4];
   const values = new Data({
+    serialNumber:serialNumber,
     voltage:voltage,
     current:current,
     brightness:brightness,
     condition:condition
   });
   await values.save();
+  res.io.emit("data",values)
   return res.status(200).json(values);
 }
