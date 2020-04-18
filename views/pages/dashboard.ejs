@@ -132,10 +132,10 @@
                 tr[7].innerHTML = data.brightness;
                 //tr[15].firstChild.innerHTML = (data.condition == true)?"Normal":"Abnormal"
                 if(data.condition == false){
-                  tr[15].firstChild.setAttribute('data-badge-caption',"Normal")
+                  tr[15].firstChild.setAttribute('data-badge-caption',"Abormal")
                   tr[15].firstChild.className = 'new badge red';
                 } else {
-                  tr[15].firstChild.setAttribute('data-badge-caption',"Abormal")
+                  tr[15].firstChild.setAttribute('data-badge-caption',"Normal")
                   tr[15].firstChild.className = "new badge"
                 }
                 var row = serials[i].parentNode;
