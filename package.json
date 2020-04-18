@@ -2,7 +2,7 @@
   "name": "stls",
   "version": "1.0.0",
   "description": "\"smart street light\"",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
@@ -21,7 +21,7 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Faustin",
