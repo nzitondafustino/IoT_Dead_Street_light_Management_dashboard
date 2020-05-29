@@ -15,8 +15,6 @@ exports.updateMcData = async function(req,res,next){
   if(!device){
     return res.status(401).json({msg:"unAuthorized access"});
   }
-  console.log('Serial number',device);
-
   const data = new Data({
     serialNumber:serialNumber,
     voltage:voltage,
@@ -30,10 +28,10 @@ exports.updateMcData = async function(req,res,next){
    if(device.activated == false){
     device.activated = true
    }
-  device.data.push(data)
+   
+  device.data.push(data._id)
   await device.save()
 
   res.io.emit("data",data)
-  console.log(res.io)
   return res.status(200).json(data);
 }

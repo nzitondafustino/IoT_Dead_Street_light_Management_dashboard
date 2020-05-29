@@ -8,9 +8,11 @@ const { validationResult } = require('express-validator');
 const Device = require('../models/device');
 
 exports.dashboard = async function(req,res,next){
-    var devices = await Device.find({activated:true});
+    var devices = await Device.find({activated:true}).populate({path:'data',options:
+                                                                                  {sort:{_id:-1}}});
+    console.log(devices)
     devices = devices.map(device=>{
-        device.data.sort(function(a,b){
+        device.data = device.data.sort(function(a,b){
             return new Date(b.created) - new Date(a.created);
           });
         return {

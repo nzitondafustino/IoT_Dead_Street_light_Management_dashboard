@@ -12,11 +12,11 @@ const dataSchema = new schema({
     condition:Boolean,
     created:{
         type:Date,
-        default:Date.now()
+        default:new Date()
     },
     updated:{
         type:Date,
-        default:Date.now()
+        default:new Date()
     },
     device: {
         type:mongoose.Schema.Types.ObjectId,

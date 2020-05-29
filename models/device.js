@@ -6,9 +6,6 @@ const schema=mongoose.Schema;
 const deviceSchema = new schema({
     SN : String,
     phone : String,
-    voltage: Number,
-    current :Number,
-    brightness:Number,
     location:String,
     road:String,
     lampNumber:Number,
@@ -18,13 +15,18 @@ const deviceSchema = new schema({
     },
     created:{
         type:Date,
-        default:Date.now()
+        default:new Date()
     },
     updated:{
         type:Date,
-        default:Date.now()
+        default:new Date()
     },
-    data:[]
+    data:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Data"
+        }
+    ]
 
 });
 const device = mongoose.model('Device',deviceSchema);
