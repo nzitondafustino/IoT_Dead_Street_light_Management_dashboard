@@ -1,4 +1,7 @@
 const mongoose=require('mongoose');
+
+const Data = require('../models/data')
+
 const schema=mongoose.Schema;
 const deviceSchema = new schema({
     SN : String,
@@ -20,7 +23,8 @@ const deviceSchema = new schema({
     updated:{
         type:Date,
         default:Date.now()
-    }
+    },
+    data:[]
 
 });
 const device = mongoose.model('Device',deviceSchema);

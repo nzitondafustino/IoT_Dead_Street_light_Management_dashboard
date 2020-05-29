@@ -8,7 +8,35 @@ const { validationResult } = require('express-validator');
 const Device = require('../models/device');
 
 exports.dashboard = async function(req,res,next){
-    const devices = await Device.find({activated:true});
+    var devices = await Device.find({activated:true});
+    devices = devices.map(device=>{
+        device.data.sort(function(a,b){
+            return new Date(b.created) - new Date(a.created);
+          });
+        return {
+                SN : device.SN,
+                phone : device.phone,
+                voltage: device.data.find(data=>{
+                    let lastElement = device.data.length
+                    return device.data[0]
+                }).voltage,
+                current :device.data.find(data=>{
+                    let lastElement = device.data.length
+                    return device.data[0]
+                }).current,
+                brightness : device.data.find(data=>{
+                    let lastElement = device.data.length
+                    return device.data[0]
+                }).brightness,
+                condition: device.data.find(data=>{
+                    let lastElement = device.data.length
+                    return device.data[0]
+                }).condition,
+                location:device.location,
+                road:device.road,
+                lampNumber:device.lampNumber,
+        }
+    })
     res.render('pages/dashboard',{title:"Dashboard",devices:devices});
 } 
 exports.getAddDevice = function(req,res,next){

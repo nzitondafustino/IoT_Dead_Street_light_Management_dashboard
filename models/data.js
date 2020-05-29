@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+
+const Device = require('../models/device')
+
 const schema = mongoose.Schema;
 
 const dataSchema = new schema({
@@ -14,6 +17,10 @@ const dataSchema = new schema({
     updated:{
         type:Date,
         default:Date.now()
+    },
+    device: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Device'
     }
 });
 
