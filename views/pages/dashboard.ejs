@@ -115,7 +115,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 <script>
   var devices = <%- JSON.stringify(devices) %>;
-  var socket = io.connect('http://localhost:80');
+  var socket = io.connect('https://iotstls.herokuapp.com/');
         socket.on('data', function(data) {
             var serials = document.getElementsByClassName('serial')
             var udpated = false;
