@@ -4,7 +4,7 @@
   "description": "\"smart street light\"",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "connect-mongodb-session": "^2.3.1",
     "cookie-parser": "^1.4.5",
