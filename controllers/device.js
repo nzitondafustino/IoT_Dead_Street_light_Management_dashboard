@@ -10,12 +10,12 @@ const Device = require('../models/device');
 exports.dashboard = async function(req,res,next){
     var devices = await Device.find({activated:true}).populate({path:'data',options:
                                                                                   {sort:{_id:-1}}});
-    console.log(devices)
     devices = devices.map(device=>{
         device.data = device.data.sort(function(a,b){
             return new Date(b.created) - new Date(a.created);
           });
         return {
+                _id : device._id,
                 SN : device.SN,
                 phone : device.phone,
                 voltage: device.data.find(data=>{
@@ -37,6 +37,10 @@ exports.dashboard = async function(req,res,next){
                 location:device.location,
                 road:device.road,
                 lampNumber:device.lampNumber,
+                created:device.data.find(data=>{
+                    let lastElement = device.data.length
+                    return device.data[0]
+                }).created
         }
     })
     res.render('pages/dashboard',{title:"Dashboard",devices:devices});

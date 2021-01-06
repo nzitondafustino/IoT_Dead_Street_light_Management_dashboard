@@ -29,8 +29,8 @@
                   <td class="hide-on-med-and-down"><%= device.current %></td>
                   <td><%= device.brightness %></td>
                   <td class="hide-on-med-and-down"><%= device.location %></td>
-                  <td class="hide-on-med-and-down">20 minutes</td>
-                  <td>online</td>
+                  <td class="hide-on-med-and-down" class="timefiels">20 minutes</td>
+                  <td class="status-continer"><span>online</span><span class="status" ></span></td>
                   <td><span class="new badge" data-badge-caption="Normal"></span></td>
                   <td><a class="btn-floating btn waves-effect waves-light teal view modal-trigger btn-small" data-target="modal1" onclick="view(event)"><i class="material-icons">visibility</i></a>
                       <a class="btn-floating btn waves-effect waves-light blue update modal-trigger btn-small" data-target="modal2" onclick="update(event)"><i class="material-icons">edit</i></a>
@@ -115,11 +115,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 <script>
   var devices = <%- JSON.stringify(devices) %>;
+  var updates;
+  var timeout = 6000;
+  var statuses = document.querySelectorAll('.status');
+  var timefields = document.querySelectorAll('.time');
   var socket = io.connect('https://iotstls.herokuapp.com/');
         socket.on('data', function(data) {
             var serials = document.getElementsByClassName('serial')
             var udpated = false;
             var i;
+            updates = data;
             console.log(data)
             for(i =0; i < serials.length;i++){
               var serial = serials[i].innerHTML;
@@ -130,6 +135,8 @@
                 tr[3].innerHTML = data.voltage;
                 tr[5].innerHTML = data.current;
                 tr[7].innerHTML = data.brightness;
+                devices[i].created = data.created;
+
                 //tr[15].firstChild.innerHTML = (data.condition == true)?"Normal":"Abnormal"
                 if(data.condition == false){
                   tr[15].firstChild.setAttribute('data-badge-caption',"Abormal")
@@ -146,5 +153,32 @@
               }
             }
         })
+
+
+        checkStatus(devices)
+        setInterval(()=>{
+          checkStatus(devices);
+        },timeout);
+
+        //checking if device is no longer sending data during 20 seconds
+        function checkStatus(data){
+          //console.log(data)
+          data.forEach((el,i) => {
+            let now = new Date();
+            let updateAt = new Date(el.created);
+            console.log(el.created);
+            let differnce = now.getTime() - updateAt.getTime();
+            differnce = differnce/(1000*60);
+            console.log(differnce);
+            statuses[i].parentNode.previousSibling.previousSibling.textContent = Math.round(differnce) + " Minute(s)";
+            if(differnce >= timeout) {
+              statuses[i].style.backgroundColor="Red";
+              statuses[i].parentNode.firstChild.textContent="Offline";
+            } else {
+              statuses[i].style.backgroundColor="Green";
+              statuses[i].parentNode.firstChild.textContent="Online";
+            }
+          });
+        }
 </script>
 <%- include('../partials/footer') %>

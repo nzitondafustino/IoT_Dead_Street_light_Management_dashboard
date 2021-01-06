@@ -1,0 +1,139 @@
+<%- include ('../partials/header')%>
+<%- include ('../partials/nav')%>
+<div class="container">
+  <div class="row">
+        <%- include ('../partials/sideNav')%>
+        <div class="col m12">
+         <div class="container center-align">
+             <h2>Electicity Usage</h2>
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <br>
+            <br>
+            <div class="input-field col s6">
+                <input placeholder="Start Date" id="datepicker1" type="text" class="datepicker1" name="start">
+                <label for="datepicker1">Start Date</label>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="End Date" id="datepicker2" type="text" class="datepicker2" name="end">
+                <label for="datepicker2">End Date</label>
+            </div>
+            <table>
+                <thead>
+                  <tr>
+                      <th>Gross Energy</th>
+                      <th>Energy Used</th>
+                      <th>Energy Saved</th>
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr>
+                    <td class="gross" >47747wh</td>
+                    <td class="consumption">477wh</td>
+                    <td class="saving">477wh</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+</div>
+<%- include('../partials/footer') %>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+  var data = <%- JSON.stringify(data) %>;
+  var datepicker1 = document.querySelector('.datepicker1');
+  var datepicker2 = document.querySelector('.datepicker2');
+  var energy;
+  var startdate = new Date(2020,6);
+  var endDate;
+
+  var showChat = ()=>{
+     startdate = datepicker1.value;
+     endDate = datepicker2.value;
+    if(new Date(datepicker2.value) < new Date(datepicker1.value)) {
+        endDate = startdate;
+    }
+    console.log(startdate,endDate)
+    const formatedData = formatData(data,startdate,endDate)
+    console.log(formatedData)
+    chat(formatedData);
+    displayEnergy(energy);
+  }
+  datepicker1.addEventListener('change',showChat)
+  datepicker2.addEventListener('change',showChat)
+
+  const formatedData = formatData(data,startdate,endDate);
+  window.onload = function () {
+      chat(formatedData);
+      displayEnergy(energy);
+}
+function formatData(data,startDate,endDate){
+     var date;
+     var power;
+     var formatedData = [];
+            if(!endDate){
+                data = data.filter(el=>{
+                    return new Date(el.created) > new Date(startdate)
+                })
+                energy = calculateEnergy(data)
+            }
+            else {
+                data = data.filter(el=>{
+                    return new Date(el.created) > new Date(startdate) && new Date(el.created) < new Date(endDate)
+                })
+                energy = calculateEnergy(data)
+            }
+        data.forEach(el => {
+                date = new Date(el.created).toDateString();
+                power = parseFloat(el.current) * parseFloat(el.voltage);
+                formatedData.push({
+                        label:date,
+                        y:power
+                })
+        });
+     return formatedData;
+}
+    $(document).ready(function(){
+     $('.datepicker1').datepicker();
+     $('.datepicker2').datepicker();
+    });
+function chat(data){
+    var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "Power vs Time"              
+		},
+		data: [              
+		{
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "column",
+			dataPoints: data
+		}
+		]
+	});
+	chart.render();
+}
+function calculateEnergy(data){
+    var voltageRating = 220;
+    var currentRating = 10;
+    var current;
+    var voltage;
+    var power =  0;
+    data.forEach(el => {
+        current = parseFloat(el.current);
+        voltage = parseFloat(el.voltage);
+        power += current * voltage;
+    });
+    return {
+        consumption: power * .15/1000,
+        gross: voltageRating * currentRating * data.length * .15/1000,
+        saving: (voltageRating * currentRating * data.length * .15 - power * .15)/1000
+
+    }
+}
+function displayEnergy(energy){
+    document.querySelector('.gross').textContent = energy.gross + "KwH";
+    document.querySelector('.consumption').textContent = energy.consumption + "KwH";
+    document.querySelector('.saving').textContent = energy.saving + "KwH";
+}
+</script>
