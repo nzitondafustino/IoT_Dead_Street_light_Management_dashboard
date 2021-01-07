@@ -1,6 +1,8 @@
 const express=require('express');
 
 const http=require('http');
+
+const Data = require("./models/data");
 //importing body parser
 
 const bodyParser = require('body-parser');
@@ -13,7 +15,6 @@ const store = new MongoDBStore({
   uri: 'mongodb+srv://stls:stls@cluster0-tkfjg.mongodb.net/slms?retryWrites=true&w=majority',
   collection: 'sessions'
 });
-
 const app=express();
 const server=http.createServer(app);
 const io = require('socket.io')(server);

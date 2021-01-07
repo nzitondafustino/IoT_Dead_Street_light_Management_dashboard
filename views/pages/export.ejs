@@ -12,11 +12,11 @@
             <form action="/add/export" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="input-field col s6">
-                    <input placeholder="Start Date" id="datepicker1" type="text" class="datepicker1" name="start">
+                    <input placeholder="Start Date" id="datepicker1" type="text" class="datepicker1" name="start" required>
                     <label for="datepicker1">Start Date</label>
                 </div>
                 <div class="input-field col s6">
-                    <input placeholder="End Date" id="datepicker2" type="text" class="datepicker2" name="end">
+                    <input placeholder="End Date" id="datepicker2" type="text" class="datepicker2" name="end" required>
                     <label for="datepicker2">End Date</label>
                 </div>
                 <div class="row right-align">
