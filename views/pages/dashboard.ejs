@@ -120,7 +120,7 @@
   var threshold = 20;
   var statuses = document.querySelectorAll('.status');
   var timefields = document.querySelectorAll('.time');
-  var socket = io.connect('http://localhost/');
+  var socket = io.connect('https://iotstls.herokuapp.com/');
         socket.on('data', function(data) {
             var serials = document.getElementsByClassName('serial')
             var udpated = false;
