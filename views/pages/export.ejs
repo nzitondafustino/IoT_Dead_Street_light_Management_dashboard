@@ -9,14 +9,20 @@
             <div id="chartContainer" style="height: 300px; width: 100%;"></div>
             <br>
             <br>
-            <div class="input-field col s6">
-                <input placeholder="Start Date" id="datepicker1" type="text" class="datepicker1" name="start">
-                <label for="datepicker1">Start Date</label>
-            </div>
-            <div class="input-field col s6">
-                <input placeholder="End Date" id="datepicker2" type="text" class="datepicker2" name="end">
-                <label for="datepicker2">End Date</label>
-            </div>
+            <form action="/add/export" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-field col s6">
+                    <input placeholder="Start Date" id="datepicker1" type="text" class="datepicker1" name="start">
+                    <label for="datepicker1">Start Date</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="End Date" id="datepicker2" type="text" class="datepicker2" name="end">
+                    <label for="datepicker2">End Date</label>
+                </div>
+                <div class="row right-align">
+                    <button type="submit" class="btn waves-effect waves-light teal">Export CSV</button>
+                   </div>
+            </form>
             <table>
                 <thead>
                   <tr>
@@ -54,9 +60,7 @@
     if(new Date(datepicker2.value) < new Date(datepicker1.value)) {
         endDate = startdate;
     }
-    console.log(startdate,endDate)
     const formatedData = formatData(data,startdate,endDate)
-    console.log(formatedData)
     chat(formatedData);
     displayEnergy(energy);
   }
@@ -74,13 +78,13 @@ function formatData(data,startDate,endDate){
      var formatedData = [];
             if(!endDate){
                 data = data.filter(el=>{
-                    return new Date(el.created) > new Date(startdate)
+                    return new Date(el.created) >= new Date(startdate)
                 })
                 energy = calculateEnergy(data)
             }
             else {
                 data = data.filter(el=>{
-                    return new Date(el.created) > new Date(startdate) && new Date(el.created) < new Date(endDate)
+                    return new Date(el.created) >= new Date(startdate) && new Date(el.created) <= new Date(endDate)
                 })
                 energy = calculateEnergy(data)
             }
@@ -125,9 +129,9 @@ function calculateEnergy(data){
         power += current * voltage;
     });
     return {
-        consumption: power * .15/1000,
-        gross: voltageRating * currentRating * data.length * .15/1000,
-        saving: (voltageRating * currentRating * data.length * .15 - power * .15)/1000
+        consumption: power * .25/1000,
+        gross: voltageRating * currentRating * data.length * .25/1000,
+        saving: (voltageRating * currentRating * data.length * .25 - power * .25)/1000
 
     }
 }

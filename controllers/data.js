@@ -23,6 +23,7 @@ exports.updateMcData = async function(req,res,next){
     current:current,
     brightness:brightness,
     condition:condition,
+    created: new Date().toISOString(),
     device:device._id
   });
 
@@ -43,9 +44,9 @@ exports.exportData = async function(req,res,next){
 }
 exports.getExportData = async function(req,res,next){
 
-  const initialDate = fomateDate(req.body.initial);
-  const finalDate = fomateDate(req.body.final);
-
+  const initialDate = fomateDate(req.body.start);
+  const finalDate = fomateDate(req.body.end);
+  
   const data = await Data.find({})
                           .where('created').gte(initialDate)
                           .where('created').lte(finalDate);
@@ -68,10 +69,6 @@ exports.getExportData = async function(req,res,next){
   });
 }
 function fomateDate(stringDate){
-  var date = stringDate.split("/");
-  newDate = new Date();
-  newDate.setDate(date[0]);
-  newDate.setMonth(parseInt(date[1]) - 1);
-  newDate.setYear(date[2]);
+  newDate = new Date(stringDate);
   return newDate;
 }

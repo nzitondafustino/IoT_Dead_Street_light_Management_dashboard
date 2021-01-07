@@ -116,10 +116,11 @@
 <script>
   var devices = <%- JSON.stringify(devices) %>;
   var updates;
-  var timeout = 6000;
+  var timeout = 60000;
+  var threshold = 20;
   var statuses = document.querySelectorAll('.status');
   var timefields = document.querySelectorAll('.time');
-  var socket = io.connect('https://iotstls.herokuapp.com/');
+  var socket = io.connect('http://localhost/');
         socket.on('data', function(data) {
             var serials = document.getElementsByClassName('serial')
             var udpated = false;
@@ -136,6 +137,7 @@
                 tr[5].innerHTML = data.current;
                 tr[7].innerHTML = data.brightness;
                 devices[i].created = data.created;
+                checkStatus(devices);
 
                 //tr[15].firstChild.innerHTML = (data.condition == true)?"Normal":"Abnormal"
                 if(data.condition == false){
@@ -155,7 +157,7 @@
         })
 
 
-        checkStatus(devices)
+        checkStatus(devices);
         setInterval(()=>{
           checkStatus(devices);
         },timeout);
@@ -166,12 +168,13 @@
           data.forEach((el,i) => {
             let now = new Date();
             let updateAt = new Date(el.created);
+            console.log(now.toISOString());
             console.log(el.created);
             let differnce = now.getTime() - updateAt.getTime();
             differnce = differnce/(1000*60);
             console.log(differnce);
             statuses[i].parentNode.previousSibling.previousSibling.textContent = Math.round(differnce) + " Minute(s)";
-            if(differnce >= timeout) {
+            if(differnce >= threshold ) {
               statuses[i].style.backgroundColor="Red";
               statuses[i].parentNode.firstChild.textContent="Offline";
             } else {
