@@ -130,7 +130,7 @@ function calculateEnergy(data){
     return {
         consumption: consumption.toFixed(2),
         gross: (voltage * currentRating * data.length * .25).toFixed(2),
-        saving: (voltage * currentRating * data.length * .25 - 60*1000).toFixed(2)
+        saving: (voltage * currentRating * data.length * .25 - consumption).toFixed(2)
 
     }
 }
