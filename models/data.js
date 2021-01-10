@@ -10,6 +10,7 @@ const dataSchema = new schema({
     current:String,
     brightness:String,
     condition:Boolean,
+    energy:String,
     created:{
         type:Date,
         default:new Date()

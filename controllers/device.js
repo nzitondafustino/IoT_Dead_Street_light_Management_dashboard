@@ -22,6 +22,10 @@ exports.dashboard = async function(req,res,next){
                     let lastElement = device.data.length
                     return device.data[0]
                 }).voltage,
+                energy: device.data.find(data=>{
+                    let lastElement = device.data.length
+                    return device.data[0]
+                }).energy,
                 current :device.data.find(data=>{
                     let lastElement = device.data.length
                     return device.data[0]

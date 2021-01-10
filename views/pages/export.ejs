@@ -34,9 +34,9 @@
         
                 <tbody>
                   <tr>
-                    <td class="gross" >47747wh</td>
-                    <td class="consumption">477wh</td>
-                    <td class="saving">477wh</td>
+                    <td class="gross" >47747J</td>
+                    <td class="consumption">477J</td>
+                    <td class="saving">74J</td>
                   </tr>
                 </tbody>
               </table>
@@ -118,26 +118,25 @@ function chat(data){
 	chart.render();
 }
 function calculateEnergy(data){
-    var voltageRating = 220;
     var currentRating = 10;
     var current;
     var voltage;
-    var power =  0;
+    var consumption =  0;
     data.forEach(el => {
         current = parseFloat(el.current);
         voltage = parseFloat(el.voltage);
-        power += current * voltage;
+        consumption += parseFloat(el.energy);
     });
     return {
-        consumption: (power * .25/1000).toFixed(2),
-        gross: (voltageRating * currentRating * data.length * .25/1000).toFixed(),
-        saving: ((voltageRating * currentRating * data.length * .25 - power * .25)/1000).toFixed()
+        consumption: consumption.toFixed(2),
+        gross: (voltage * currentRating * data.length * .25).toFixed(2),
+        saving: (voltage * currentRating * data.length * .25 - 60*1000).toFixed(2)
 
     }
 }
 function displayEnergy(energy){
-    document.querySelector('.gross').textContent = energy.gross + "KwH";
-    document.querySelector('.consumption').textContent = energy.consumption + "KwH";
-    document.querySelector('.saving').textContent = energy.saving + "KwH";
+    document.querySelector('.gross').textContent = energy.gross + "J";
+    document.querySelector('.consumption').textContent = energy.consumption + "J";
+    document.querySelector('.saving').textContent = energy.saving + "J";
 }
 </script>

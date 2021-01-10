@@ -10,5 +10,6 @@ const auth = require('../middlewares/isAuth');
 router.get('/data',mcuController.updateMcData);
 router.get('/export',auth.isAuth,mcuController.exportData);
 router.post('/export',auth.isAuth,mcuController.getExportData);
+router.get('/offline',mcuController.getOfflineLamps);
 
 module.exports = router;
