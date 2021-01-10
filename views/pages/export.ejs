@@ -129,9 +129,9 @@ function calculateEnergy(data){
         power += current * voltage;
     });
     return {
-        consumption: power * .25/1000,
-        gross: voltageRating * currentRating * data.length * .25/1000,
-        saving: (voltageRating * currentRating * data.length * .25 - power * .25)/1000
+        consumption: (power * .25/1000).toFixed(2),
+        gross: (voltageRating * currentRating * data.length * .25/1000).toFixed(),
+        saving: ((voltageRating * currentRating * data.length * .25 - power * .25)/1000).toFixed()
 
     }
 }
