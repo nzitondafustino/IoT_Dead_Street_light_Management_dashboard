@@ -118,13 +118,12 @@ function chat(data){
 	chart.render();
 }
 function calculateEnergy(data){
-    var currentRating = 10;
+    var currentRating = 1/6;
+    const voltage = 5;
     var current;
-    var voltage;
     var consumption =  0;
     data.forEach(el => {
         current = parseFloat(el.current);
-        voltage = parseFloat(el.voltage);
         consumption += parseFloat(el.energy);
     });
     return {
